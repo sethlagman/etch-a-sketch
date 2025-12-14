@@ -15,9 +15,14 @@ const rgbBtn = document.createElement('button')
 rgbBtn.className = 'rgbBtn'
 rgbBtn.textContent = 'RGB Paint'
 
+const shadeBtn = document.createElement('button')
+shadeBtn.className = 'shadeBtn'
+shadeBtn.textContent = 'Shading'
+
 btnContainer.appendChild(inputBtn)
 btnContainer.appendChild(clearBtn)
 btnContainer.appendChild(rgbBtn)
+btnContainer.appendChild(shadeBtn)
 
 body.appendChild(btnContainer)
 

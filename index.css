@@ -32,7 +32,8 @@ html {
 
 .inputBtn,
 .clearBtn,
-.rgbBtn {
+.rgbBtn,
+.shadeBtn {
     height: 30px;
     width: 120px;
     margin-bottom: 10px;
