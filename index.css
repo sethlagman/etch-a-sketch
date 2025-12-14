@@ -31,7 +31,8 @@ html {
 }
 
 .inputBtn,
-.clearBtn {
+.clearBtn,
+.rgbBtn {
     height: 30px;
     width: 120px;
     margin-bottom: 10px;

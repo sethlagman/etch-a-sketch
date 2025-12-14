@@ -5,13 +5,19 @@ inputBtn.className = 'inputBtn'
 inputBtn.textContent = 'Change Grid Size'
 
 const clearBtn = document.createElement('button')
-clearBtn.className = 'inputBtn'
+clearBtn.className = 'clearBtn'
 clearBtn.textContent = 'Clear Grid'
 
 const btnContainer = document.createElement('div')
 btnContainer.className = 'btnContainer'
+
+const rgbBtn = document.createElement('button')
+rgbBtn.className = 'rgbBtn'
+rgbBtn.textContent = 'RGB Paint'
+
 btnContainer.appendChild(inputBtn)
 btnContainer.appendChild(clearBtn)
+btnContainer.appendChild(rgbBtn)
 
 body.appendChild(btnContainer)
 
@@ -46,6 +52,11 @@ function paintGridOnHover() {
             event.target.style.background = gridColor
         }
     })
+}
+
+function rgbPaint() {
+    var o = Math.round, r = Math.random, s = 255;
+    gridColor = 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
 }
 
 function etch() {
