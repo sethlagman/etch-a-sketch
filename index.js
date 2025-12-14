@@ -8,8 +8,12 @@ const clearBtn = document.createElement('button')
 clearBtn.className = 'inputBtn'
 clearBtn.textContent = 'Clear Grid'
 
-body.appendChild(clearBtn)
-body.appendChild(inputBtn)
+const btnContainer = document.createElement('div')
+btnContainer.className = 'btnContainer'
+btnContainer.appendChild(inputBtn)
+btnContainer.appendChild(clearBtn)
+
+body.appendChild(btnContainer)
 
 const container = document.createElement('div')
 container.className = 'container'

@@ -21,6 +21,11 @@ html {
     border: 0.2px solid black;
 }
 
+.btnContainer {
+    display: flex;
+    gap: 20px;
+}
+
 .grid {
     border: 0.2px solid black;
 }
