@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    width: 800px;
+    height: 800px;
+    flex-wrap: wrap;
+    border: 0.2px solid black;
+}
+
+.grid {
+    border: 0.2px solid black;
+}
+
+.inputBtn,
+.clearBtn {
+    height: 30px;
+    width: 120px;
+    margin-bottom: 10px;
+}
