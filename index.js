@@ -28,6 +28,7 @@ body.appendChild(container)
 let inputSize = 16
 let gridSize = inputSize ** 2
 let gridColor = 'black'
+let rbg = false
 
 function createGrid() {
     for (let i = 0; i < gridSize; i++) {
@@ -49,14 +50,18 @@ function clearGrid() {
 function paintGridOnHover() {
     container.addEventListener('mouseover', (event) => {
         if (event.target.classList.contains('grid')) {
-            event.target.style.background = gridColor
+            if (!rbg) {
+                event.target.style.background = gridColor
+            } else {
+                event.target.style.background = rgbPaint()
+            }
         }
     })
 }
 
 function rgbPaint() {
     var o = Math.round, r = Math.random, s = 255;
-    gridColor = 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+    return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
 }
 
 function etch() {
@@ -65,7 +70,7 @@ function etch() {
         let userInput
         do {
             userInput = parseInt(prompt('Enter a grid size (1 - 100)'))
-        } while (userInput < 1 || userInput > 100)
+        } while (userInput < 1 || userInput > 100 || !userInput)
         
         inputSize = parseInt(userInput)
         gridSize = inputSize ** 2
@@ -74,6 +79,9 @@ function etch() {
     })
 
     clearBtn.addEventListener('click', clearGrid)
+
+    rgbBtn.addEventListener('click', () => rbg = (!rbg) ? true : false)
+
     createGrid()
     paintGridOnHover()
 }
