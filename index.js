@@ -19,10 +19,15 @@ const shadeBtn = document.createElement('button')
 shadeBtn.className = 'shadeBtn'
 shadeBtn.textContent = 'Shading'
 
+const lightBtn = document.createElement('button')
+lightBtn.className = 'lightBtn'
+lightBtn.textContent = 'Lightening'
+
 btnContainer.appendChild(inputBtn)
 btnContainer.appendChild(clearBtn)
 btnContainer.appendChild(rgbBtn)
 btnContainer.appendChild(shadeBtn)
+btnContainer.appendChild(lightBtn)
 
 body.appendChild(btnContainer)
 
@@ -84,6 +89,21 @@ function shadePaint(element) {
     }
 }
 
+function lightPaint(element) {
+    let background = element.style.background
+    let rgbaCheck = background.slice(0, 4)
+
+    if (rgbaCheck !== 'rgba') {
+        background = background.replace('rgb', 'rgba')
+        background = background.replace(/\)/i,',1)');
+    }
+    
+    let opacity = parseFloat(background.slice(5, -1).split(',').at(-1))
+    let newOpacity = Number(opacity.toFixed(2)) - 0.1
+    let newRgba = background.replace(/[\d.]+\)$/g, `${newOpacity})`)
+    element.style.background = newRgba
+}
+
 function etch() {
     inputBtn.addEventListener('click', (event) => {
         let userInput
@@ -102,13 +122,15 @@ function etch() {
     })
 
     rgbBtn.addEventListener('click', () => {
-        mode = (mode == 'default') ? 'rgb'
-        : (mode == 'shade') ? 'rgb' : 'default'
+        mode = 'rgb'
     })
 
     shadeBtn.addEventListener('click', () => {
-        mode = (mode == 'default') ? 'shade'
-        : (mode == 'rgb') ? 'shade' : 'default'
+        mode = 'shade'
+    })
+
+    lightBtn.addEventListener('click', () => {
+        mode = 'light'
     })
 
     container.addEventListener('mouseover', (event) => {
@@ -122,6 +144,9 @@ function etch() {
                     break
                 case 'shade':
                     shadePaint(event.target)
+                    break
+                case 'light':
+                    lightPaint(event.target)
                     break
             }
         }
