@@ -23,11 +23,16 @@ const lightBtn = document.createElement('button')
 lightBtn.className = 'lightBtn'
 lightBtn.textContent = 'Lightening'
 
+const defaultBtn = document.createElement('button')
+defaultBtn.className = 'defaultBtn'
+defaultBtn.textContent = 'Default'
+
 btnContainer.appendChild(inputBtn)
 btnContainer.appendChild(clearBtn)
 btnContainer.appendChild(rgbBtn)
 btnContainer.appendChild(shadeBtn)
 btnContainer.appendChild(lightBtn)
+btnContainer.appendChild(defaultBtn)
 
 body.appendChild(btnContainer)
 
@@ -60,6 +65,10 @@ function clearGrid() {
     grids.forEach((grid) => {
         grid.remove()
     })
+}
+
+function defaultPaint(element) {
+    element.style.background = 'rgba(0, 0, 0, 1)'
 }
 
 function rgbPaint(element) {
@@ -97,7 +106,7 @@ function lightPaint(element) {
         background = background.replace('rgb', 'rgba')
         background = background.replace(/\)/i,',1)');
     }
-    
+
     let opacity = parseFloat(background.slice(5, -1).split(',').at(-1))
     let newOpacity = Number(opacity.toFixed(2)) - 0.1
     let newRgba = background.replace(/[\d.]+\)$/g, `${newOpacity})`)
@@ -133,11 +142,15 @@ function etch() {
         mode = 'light'
     })
 
+    defaultBtn.addEventListener('click', () => {
+        mode = 'default'
+    })
+
     container.addEventListener('mouseover', (event) => {
         if (event.target.classList.contains('grid')) {
             switch (mode) {
                 case 'default':
-                    event.target.style.background = 'rgba(0, 0, 0, 1.0)'
+                    defaultPaint(event.target)
                     break
                 case 'rgb':
                     rgbPaint(event.target)

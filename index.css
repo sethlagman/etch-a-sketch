@@ -34,7 +34,8 @@ html {
 .clearBtn,
 .rgbBtn,
 .shadeBtn,
-.lightBtn {
+.lightBtn,
+.defaultBtn {
     height: 30px;
     width: 120px;
     margin-bottom: 10px;
