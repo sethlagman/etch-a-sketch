@@ -32,8 +32,13 @@ body.appendChild(container)
 
 let inputSize = 16
 let gridSize = inputSize ** 2
-let gridColor = 'black'
-let rbg = false
+let mode = 'default'
+
+function setupEtch() {
+    mode = 'default'
+    clearGrid()
+    createGrid()
+}
 
 function createGrid() {
     for (let i = 0; i < gridSize; i++) {
@@ -45,33 +50,42 @@ function createGrid() {
 }
 
 function clearGrid() {
+    mode = 'default'
     const grids = document.querySelectorAll('.grid')
     grids.forEach((grid) => {
         grid.remove()
     })
-    createGrid()
 }
 
-function paintGridOnHover() {
-    container.addEventListener('mouseover', (event) => {
-        if (event.target.classList.contains('grid')) {
-            if (!rbg) {
-                event.target.style.background = gridColor
-            } else {
-                event.target.style.background = rgbPaint()
-            }
-        }
-    })
+function rgbPaint(element) {
+    let o = Math.round, r = Math.random, s = 255;
+    let newRgb = 'rgba(' 
+    + o(r()*s) 
+    + ',' 
+    + o(r()*s) 
+    + ',' 
+    + o(r()*s) 
+    + ',' 
+    + r().toFixed(1) 
+    + ')';
+    element.style.background = newRgb
 }
 
-function rgbPaint() {
-    var o = Math.round, r = Math.random, s = 255;
-    return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+function shadePaint(element) {
+    let background = element.style.background
+
+    if (background === '') {
+        element.style.background = 'rgba(0, 0, 0, 0.1)'
+    } else {
+        let opacity = parseFloat(background.slice(5, -1).split(',').at(-1))
+        let newOpacity = Number(opacity.toFixed(2)) + 0.1
+        let newRgba = background.replace(/[\d.]+\)$/g, `${newOpacity})`)
+        element.style.background = newRgba
+    }
 }
 
 function etch() {
     inputBtn.addEventListener('click', (event) => {
-        event.stopPropagation()
         let userInput
         do {
             userInput = parseInt(prompt('Enter a grid size (1 - 100)'))
@@ -79,16 +93,41 @@ function etch() {
         
         inputSize = parseInt(userInput)
         gridSize = inputSize ** 2
-        clearGrid()
-        paintGridOnHover()
+
+        setupEtch()
     })
 
-    clearBtn.addEventListener('click', clearGrid)
+    clearBtn.addEventListener('click', () => {
+        setupEtch()
+    })
 
-    rgbBtn.addEventListener('click', () => rbg = (!rbg) ? true : false)
+    rgbBtn.addEventListener('click', () => {
+        mode = (mode == 'default') ? 'rgb'
+        : (mode == 'shade') ? 'rgb' : 'default'
+    })
 
-    createGrid()
-    paintGridOnHover()
+    shadeBtn.addEventListener('click', () => {
+        mode = (mode == 'default') ? 'shade'
+        : (mode == 'rgb') ? 'shade' : 'default'
+    })
+
+    container.addEventListener('mouseover', (event) => {
+        if (event.target.classList.contains('grid')) {
+            switch (mode) {
+                case 'default':
+                    event.target.style.background = 'rgba(0, 0, 0, 1.0)'
+                    break
+                case 'rgb':
+                    rgbPaint(event.target)
+                    break
+                case 'shade':
+                    shadePaint(event.target)
+                    break
+            }
+        }
+    })
+
+    setupEtch()
 }
 
 etch()
